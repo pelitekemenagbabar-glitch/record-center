@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Record Center Kearsipan</title>
+    
+    <!-- Bootstrap CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Bootstrap Icons from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        /* --- CUSTOM CSS --- */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #8B0000; /* Warna merah gelap */
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .offcanvas {
+            /* Tidak perlu style khusus, Bootstrap menangani ini */
+        }
+        .offcanvas .nav-link {
+            color: #adb5bd;
+            font-size: 1.2rem; /* Memperbesar font menu */
+        }
+        .offcanvas .nav-link.active,
+        .offcanvas .nav-link:hover {
+            color: #ffffff;
+            background-color: #495057;
+        }
+        /* Style untuk submenu di sidebar */
+        .sidebar-submenu .nav-link {
+            font-size: 1rem; /* Ukuran font lebih kecil untuk submenu */
+            color: #adb5bd;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 2rem;
+        }
+        /* Memberi ruang untuk navbar fixed-top */
+        main {
+            margin-top: 70px;
+        }
+        /* --- Banner Style --- */
+        .banner {
+            position: relative;
+            height: 650px; /* Tinggi banner */
+            background-image: url('bg4.png');
+            background-size: cover;
+            background-position: center 40%; /* Menyesuaikan posisi gambar agar lebih baik */
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Bayangan teks agar terbaca */
+        }
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4); /* Lapisan gelap */
+            border-radius: 0.5rem;
+        }
+        .banner-content {
+            position: relative; /* Memastikan konten di atas overlay */
+            z-index: 1;
+        }
+        /* --- Card Hover Effect --- */
+        .card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05); /* Efek zoom saat hover */
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2); /* Bayangan lebih menonjol */
+            z-index: 10; /* Memastikan kartu yang di-hover di atas yang lain */
+            cursor: pointer;
+            background-color: #212529 !important; /* Ubah background jadi hitam saat hover */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark fixed-top">
+  <div class="container-fluid">
+    <!-- Hamburger Menu -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Logo dan Nama Aplikasi -->
+    <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+      Record Center Kearsipan Kementerian Agama Kabupaten Bangka Barat
+      <img src="logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
+    </a>
+  </div>
+</nav>
+
+<!-- Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">
+        <i class="bi bi-archive-fill me-2"></i>Record Center
+    </h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column p-0">
+    <ul class="nav nav-pills flex-column mb-auto p-3">
+        <!-- Dashboard -->
+        <li class="nav-item mb-1">
+            <a href="dashboard.html" class="nav-link active" aria-current="page"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+        </li>
+        <!-- Pengaturan Data Aplikasi (Dropdown) -->
+        <li class="nav-item mb-1">
+            <a href="#pengaturanSubmenu" data-bs-toggle="collapse" class="nav-link" aria-expanded="false">
+                <i class="bi bi-gear me-2"></i>Pengaturan Data Aplikasi
+            </a>
+            <div class="collapse sidebar-submenu" id="pengaturanSubmenu">
+                <ul class="nav flex-column ms-4">
+                    <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-building me-2"></i>Unit Pengolah</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-person-badge me-2"></i>Data Pejabat</a></li>
+                </ul>
+            </div>
+        </li>
+        <!-- Input Arsip (Dropdown) -->
+        <li class="nav-item mb-1">
+            <a href="#inputArsipSubmenu" data-bs-toggle="collapse" class="nav-link" aria-expanded="false">
+                <i class="bi bi-file-earmark-plus me-2"></i>Input Arsip
+            </a>
+            <div class="collapse sidebar-submenu" id="inputArsipSubmenu">
+                <ul class="nav flex-column ms-4">
+                    <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-file-zip me-2"></i>Inaktif</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-file-lock me-2"></i>Statis</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-shield-check me-2"></i>Vital</a></li>
+                </ul>
+            </div>
+        </li>
+        <!-- Menu Lainnya -->
+        <li class="nav-item mb-1">
+            <a href="#" class="nav-link"><i class="bi bi-trash me-2"></i>Daftar Arsip Dimusnahkan</a>
+        </li>
+        <li class="nav-item mb-1">
+            <a href="#" class="nav-link"><i class="bi bi-box-arrow-up-right me-2"></i>Daftar Arsip Usul Serah</a>
+        </li>
+        <li class="nav-item mb-1">
+            <a href="#" class="nav-link"><i class="bi bi-bookmark-star me-2"></i>Daftar Arsip Permanen</a>
+        </li>
+        <li class="nav-item mb-1">
+            <a href="#" class="nav-link"><i class="bi bi-search me-2"></i>Pencarian Arsip</a>
+        </li>
+    </ul>
+    <hr class="m-3">
+    <div class="dropdown p-3">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://via.placeholder.com/32" alt="" width="32" height="32" class="rounded-circle me-2">
+            <strong>Admin</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            <li><a class="dropdown-item" href="#">Pengaturan</a></li>
+            <li><a class="dropdown-item" href="#">Profil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="index.html">Keluar</a></li>
+        </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Konten Utama -->
+<main class="content">
+    <!-- Banner -->
+    <div class="banner mb-4">
+        <div class="banner-content text-center">
+            <h1 class="display-5 fw-bold">Aplikasi Record Center Kearsipan</h1>
+            <p class="lead">Kementerian Agama Kabupaten Bangka Barat</p>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+    </div>
+
+    <!-- Ringkasan Data (Cards) -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <i class="bi bi-archive fs-1 mb-2"></i>
+                    <h6 class="card-title mb-1">Total Arsip</h6>
+                    <p class="card-text fs-4 fw-bold">15.203</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <i class="bi bi-file-zip fs-1 mb-2"></i>
+                    <h6 class="card-title mb-1">Arsip Inaktif</h6>
+                    <p class="card-text fs-4 fw-bold">85</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <i class="bi bi-file-lock fs-1 mb-2"></i>
+                    <h6 class="card-title mb-1">Arsip Statis</h6>
+                    <p class="card-text fs-4 fw-bold">12</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <i class="bi bi-trash fs-1 mb-2"></i>
+                    <h6 class="card-title mb-1">Arsip Musnah</h6>
+                    <p class="card-text fs-4 fw-bold">3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panduan Penggunaan Aplikasi -->
+    <h4 class="mb-3">Panduan Penggunaan Aplikasi</h4>
+    <div class="accordion" id="panduanAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <i class="bi bi-search me-2"></i><strong>Mencari Arsip</strong>
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#panduanAccordion">
+                <div class="accordion-body">
+                    Gunakan menu <strong>Pencarian Arsip</strong> di sidebar untuk menemukan dokumen. Anda dapat mencari berdasarkan nomor arsip, judul, atau tanggal. Filter lanjutan juga tersedia untuk pencarian yang lebih spesifik.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <i class="bi bi-file-earmark-plus me-2"></i><strong>Menambahkan Arsip Baru</strong>
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#panduanAccordion">
+                <div class="accordion-body">
+                    Klik menu <strong>Input Arsip Baru</strong>. Isi semua kolom yang diperlukan seperti nomor arsip, judul, tanggal, dan lokasi fisik penyimpanan. Unggah file digital jika ada, lalu klik simpan.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <i class="bi bi-journal-text me-2"></i><strong>Membuat Laporan</strong>
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#panduanAccordion">
+                <div class="accordion-body">
+                    Masuk ke menu <strong>Laporan</strong> untuk menghasilkan rekapitulasi data arsip. Anda dapat memilih periode laporan dan jenis data yang ingin disertakan, kemudian ekspor laporan dalam format PDF atau Excel.
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer mt-auto py-4 bg-dark text-white">
+    <div class="container-fluid px-4">
+        <div class="row">
+            <!-- Alamat -->
+            <div class="col-md-6 mb-3 mb-md-0">
+                <h5>Alamat Kantor</h5>
+                <p class="text-white-50">
+                    Komplek Perkantoran Terpadu Pemkab Bangka Barat,<br>
+                    Jalan Jenderal Sudirman, Daya Baru, Belo Laut, Kec. Muntok,<br>
+                    Kabupaten Bangka Barat, Kepulauan Bangka Belitung 33351
+                </p>
+            </div>
+            <!-- Media Sosial -->
+            <div class="col-md-6 mb-3 mb-md-0 text-md-end">
+                <h5>Ikuti Kami</h5>
+                <a href="#" class="text-white me-3 fs-4"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-white me-3 fs-4"><i class="bi bi-twitter-x"></i></a>
+                <a href="#" class="text-white me-3 fs-4"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-white fs-4"><i class="bi bi-youtube"></i></a>
+            </div>
+        </div>
+        <hr class="my-4">
+        <!-- Copyright -->
+        <div class="text-center text-white-50">
+            <p class="mb-0">© 2023–2024 Kementerian Agama Kab. Bangka Barat. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS Bundle from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+</body>
+</html>

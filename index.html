@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Record Center Kearsipan</title>
+    
+    <!-- Bootstrap CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Bootstrap Icons from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* background-color dihapus, digantikan oleh animasi */
+        }
+        .form-signin {
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+            z-index: 10; /* Memastikan form di atas background */
+        }
+        .form-signin .form-floating:focus-within {
+            z-index: 2;
+        }
+
+        /* --- Background Animation --- */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Di belakang overlay */
+        }
+        .bg-animation div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            animation: imageAnimation 16s linear infinite;
+        }
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Lapisan gelap */
+            z-index: -1; /* Di antara background dan konten */
+        }
+
+        /* Gambar-gambar untuk background */
+        .bg-animation #bg-img-1 { background-image: url(bg1.jpg); animation-delay: 0s; }
+        .bg-animation #bg-img-2 { background-image: url(bg2.jpg); animation-delay: 4s; }
+        .bg-animation #bg-img-3 { background-image: url(bg3.jpg); animation-delay: 8s; }
+        .bg-animation #bg-img-4 { background-image: url(bg4.png); animation-delay: 12s; }
+
+        @keyframes imageAnimation {
+            /* 
+             Setiap gambar akan terlihat selama 4 detik dari total durasi 16 detik.
+             Ini berarti setiap gambar aktif selama 25% dari durasi animasi.
+            */
+            0% { opacity: 0; animation-timing-function: ease-in; } /* Mulai transparan */
+            5% { opacity: 1; } /* Muncul (fade in) */
+            25% { opacity: 1; } /* Tetap terlihat */
+            30% { opacity: 0; } /* Menghilang (fade out) */
+            100% { opacity: 0; } /* Tetap transparan hingga siklus berikutnya */
+        }
+    </style>
+</head>
+<body class="text-center">
+
+<!-- Container untuk animasi background -->
+<div class="bg-animation">
+    <div id="bg-img-1"></div>
+    <div id="bg-img-2"></div>
+    <div id="bg-img-3"></div>
+    <div id="bg-img-4"></div>
+</div>
+<div class="bg-overlay"></div>
+
+<main class="form-signin w-100 m-auto">
+  <form action="dashboard.html">
+    <img class="mb-4" src="logo.png" alt="Logo Instansi" width="72" height="72">
+    <h1 class="h3 mb-3 fw-normal">Silakan Login</h1>
+    <h2 class="h5 mb-3 fw-light">Record Center Kearsipan</h2>
+
+    <div class="form-floating mb-2">
+      <input type="text" class="form-control" id="floatingInput" placeholder="Nama Pengguna" required>
+      <label for="floatingInput">Nama Pengguna</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Kata Sandi" required>
+      <label for="floatingPassword">Kata Sandi</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Login</button>
+    <p class="mt-4 mb-3 text-white-50" style="white-space: nowrap;">© 2023–2024 Kementerian Agama Kab. Bangka Barat</p>
+  </form>
+</main>
+
+</body>
+</html>
